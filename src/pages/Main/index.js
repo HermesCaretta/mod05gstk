@@ -1,3 +1,4 @@
+/* eslint-disable no-throw-literal */
 /* eslint-disable react/no-unused-state */
 /* eslint-disable react/state-in-constructor */
 import React, { Component } from 'react';
@@ -43,19 +44,31 @@ export default class Main extends Component {
 
     this.setState({ loading: true });
 
-    const { newRepo, repositories } = this.state;
+    try {
+      const { newRepo, repositories } = this.state;
 
-    const response = await api.get(`/repos/${newRepo}`);
+      if (newRepo === ' ') throw 'Você precisa indicar um repo';
 
-    const data = {
-      name: response.data.full_name,
-    };
+      const hasRepo = repositories.find((r) => r.name === newRepo);
 
-    this.setState({
-      repositories: [...repositories, data],
-      newRepo: '',
-      loading: false,
-    });
+      if (hasRepo) throw 'Repo duplicated';
+
+      const response = await api.get(`/repos/${newRepo}`);
+
+      const data = {
+        name: response.data.full_name,
+      };
+
+      this.setState({
+        repositories: [...repositories, data],
+        newRepo: '',
+        loading: false,
+      });
+    } catch (err) {
+      this.setState({ error: true });
+    } finally {
+      this.setState({ loading: false });
+    }
   };
 
   render() {

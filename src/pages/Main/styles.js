@@ -7,7 +7,7 @@ export const Form = styled.form`
 
   input {
     flex: 1;
-    border: 1px solid #eee;
+    border: 1px solid #121212;
     padding: 10px 15px;
     border-radius: 16px;
   }
@@ -27,7 +27,7 @@ export const SubmitButton = styled.button.attrs((props) => ({
   type: 'submit',
   disabled: props.loading,
 }))`
-  background: #7159c1;
+  background: #121212;
   border: 0;
   padding: 0 15px;
   margin-left: 10px;
@@ -67,7 +67,8 @@ export const List = styled.ul`
     }
 
     a {
-      color: #7159c1;
+      font-weight: bold;
+      color: #cd2626;
       text-decoration: none;
     }
   }
